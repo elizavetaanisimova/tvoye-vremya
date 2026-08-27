@@ -18,6 +18,8 @@
   // Карта услуг и варианты подбора приходят из content.py через build.py,
   // поэтому цены и названия не приходится дублировать здесь руками.
   var SERVICES = readJSON('tv-services');
+  // Префикс, если сайт лежит не в корне домена (подпапка на GitHub Pages).
+  var BASE = (SERVICES && SERVICES.path) || '';
   var PICKER = readJSON('tv-picker') || [];
 
   function param(name) {
@@ -297,7 +299,7 @@
       : '<p class="res__none">Ничего не отмечено. Выберите хотя бы одну программу, ' +
         'чтобы записаться.</p>';
 
-    var href = '/zapis/' + (basket.length ? '?u=' + basket.join(',') : '');
+    var href = BASE + '/zapis/' + (basket.length ? '?u=' + basket.join(',') : '');
     var cta = basket.length
       ? '<a class="btn btn--gold" href="' + href + '">Записаться' +
         (basket.length > 1 ? ' на ' + basket.length + ' ' +

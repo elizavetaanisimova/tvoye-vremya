@@ -35,6 +35,14 @@ SITE = {
     "masters": ["Марина", "Елена"],
 }
 
+# Куда сайт выложен. Пусто = сайт лежит в корне домена.
+# Для GitHub Pages в подпапке репозитория здесь будет "/tvoye-vremya".
+# Обе строки можно переопределить переменными окружения при сборке:
+#   SITE_DOMAIN=https://tvoye-vremya.by SITE_BASE= python3 build.py
+import os as _os
+SITE["base"] = _os.environ.get("SITE_BASE", "")
+SITE["domain"] = _os.environ.get("SITE_DOMAIN", SITE["domain"]).rstrip("/")
+
 # Внутренний ID компании в YCLIENTS. Нужен, чтобы открывать форму сразу
 # на выбранной услуге: .../select-services?o=s<ID услуги>
 SITE["yclients_company"] = "1900647"

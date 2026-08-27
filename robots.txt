@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://tvoye-vremya.by/sitemap.xml
+Sitemap: https://elizavetaanisimova.github.io/tvoye-vremya/sitemap.xml

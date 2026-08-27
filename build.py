@@ -21,6 +21,7 @@ from content import (SITE, PROGRAMS, PICKER, PICKER_ALT, PRINCIPLES, REVIEWS,
                      FAQ_MAIN, SERVICE_PAGES, PAIR_EXAMPLES)
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
+BASE = SITE.get("base", "")
 TODAY = date.today().isoformat()
 D = SITE["domain"]
 
@@ -124,7 +125,8 @@ def services_json():
                 "page": page_of.get(k, "/uslugi/")}
             for k, v in PROGRAMS.items()}
     return ('<script id="tv-services" type="application/json">%s</script>'
-            % json.dumps({"base": SITE["booking_url"], "alt": PICKER_ALT, "items": data},
+            % json.dumps({"base": SITE["booking_url"], "alt": PICKER_ALT,
+                          "path": BASE, "items": data},
                          ensure_ascii=False, separators=(",", ":")))
 
 
@@ -1130,7 +1132,31 @@ def page_kontakty():
 # ---------------------------------------------------------------------------
 # запись файлов
 # ---------------------------------------------------------------------------
+def add_base(html):
+    """Сайт может лежать не в корне домена (например, в подпапке на GitHub Pages).
+    Тогда всем внутренним ссылкам нужен префикс. Внешние адреса начинаются
+    с http и не трогаются, якоря вида #podbor тоже."""
+    if not BASE:
+        return html
+
+    def fix_attr(m):
+        name, val = m.group(1), m.group(2)
+        parts = []
+        for chunk in val.split(","):
+            chunk = chunk.strip()
+            if chunk.startswith("/") and not chunk.startswith("//"):
+                chunk = BASE + chunk
+            parts.append(chunk)
+        return '%s="%s"' % (name, ", ".join(parts))
+
+    html = re.sub(r'\b(href|src|srcset|imagesrcset)="([^"]*)"', fix_attr, html)
+    # адреса внутри JSON для app.js
+    html = html.replace('"page":"/', '"page":"%s/' % BASE)
+    return html
+
+
 def write(rel_path, html):
+    html = add_base(html)
     full = os.path.join(ROOT, rel_path)
     os.makedirs(os.path.dirname(full), exist_ok=True)
     open(full, "w", encoding="utf-8").write(html)
