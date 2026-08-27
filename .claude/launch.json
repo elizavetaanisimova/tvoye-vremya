@@ -1,0 +1,6 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    { "name": "massage", "runtimeExecutable": "python3", "runtimeArgs": ["-m", "http.server", "4611"], "port": 4611 }
+  ]
+}
