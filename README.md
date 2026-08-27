@@ -83,7 +83,28 @@ cd ~/Downloads/Massage && python3 -m http.server 4611
 Открыть http://localhost:4611. Локальный сервер обязателен: ссылки на страницы
 абсолютные, через двойной клик по файлу сайт откроется неправильно.
 
-## Как выложить
+## Сайт опубликован
+
+**https://elizavetaanisimova.github.io/tvoye-vremya/**
+
+Это GitHub Pages, бесплатно и без срока. Обновляется автоматически:
+любой `git push` в ветку `main` через минуту-две становится живым сайтом.
+
+Репозиторий сделан публичным, потому что бесплатный GitHub Pages иначе
+не работает. Секретов внутри нет, только контакты студии, которые и так
+открыты в Яндекс Картах и Instagram.
+
+Сайт лежит в подпапке `/tvoye-vremya/`, поэтому собран с префиксом:
+
+```bash
+SITE_BASE=/tvoye-vremya SITE_DOMAIN=https://elizavetaanisimova.github.io/tvoye-vremya python3 build.py
+git add -A && git commit -m "что изменил" && git push
+```
+
+Когда купите настоящий домен, префикс не нужен, собирайте обычной командой
+`python3 build.py`, предварительно поправив `domain` в `content.py`.
+
+## Как выложить на свой домен
 
 Любой статический хостинг: Netlify, Vercel, Cloudflare Pages, GitHub Pages,
 обычный хостинг по FTP. Копируете содержимое папки в корень сайта.
