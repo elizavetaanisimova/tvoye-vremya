@@ -290,6 +290,7 @@ def head(title, desc, path, schema_nodes, og_image="/assets/img/hero-1280.jpg",
 <link rel="stylesheet" href="/assets/css/fonts.css">
 <link rel="stylesheet" href="/assets/css/style.css">
 <script type="application/ld+json">{ld}</script>
+  <script src="https://anisimovalisaveta.com/analytics/visits.js" defer></script>
 </head>
 <body>
 {sprite}
